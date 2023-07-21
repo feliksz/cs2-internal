@@ -98,6 +98,7 @@
     <ClCompile Include="deps\minhook\hook.c" />
     <ClCompile Include="deps\minhook\trampoline.c" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="rendering\d3d11.cpp" />
     <ClCompile Include="sdk\interfaces\entity_system.cpp" />
     <ClCompile Include="sdk\interfaces\game_resource_system.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="deps\minhook\MinHook.h" />
     <ClInclude Include="deps\minhook\trampoline.h" />
     <ClInclude Include="hooks\hooks.hpp" />
+    <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="rendering\d3d11.hpp" />
     <ClInclude Include="sdk\entity\c_base_entity.hpp" />
     <ClInclude Include="sdk\interfaces\entity_system.hpp" />

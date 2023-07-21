@@ -34,23 +34,16 @@ bool initialize_interfaces() {
 	return true;
 }
 
-memory::hook_t swapchain;
-void* present_og;
-using present_t = HRESULT(_stdcall*)(IDXGISwapChain*, UINT, UINT);
-static HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapchain, UINT unSyncInterval, UINT unFlags) {
-	printf("present: 0x%llx, sync_interval: %u, flags: %u\n", (u64)pSwapchain, unSyncInterval, unFlags);
-	return ((present_t)swapchain.original_fn)(pSwapchain, unSyncInterval, unFlags);
-}
 
 bool initialize_hooks() {
 	printf("initializing hooks...\n");
-	input::initialize();
-	//d3d11::initialize();
-	//printf("d3d11 device -> 0x%llx\n", (u64)memory::find_pattern())
+
 	MH_Initialize();
 
-	swapchain.create(cs2::interfaces::swap_chain->swap_chain, 8, (void*)hkPresent);
-	printf("kurwaaa %llx\n", (u64)swapchain.original_fn);
+	input::initialize();
+	d3d11::initialize();
+	//printf("d3d11 device -> 0x%llx\n", (u64)memory::find_pattern())
+
 	//printf("mhstatus: %s\n", MH_StatusToString(MH_CreateHook(cs2::interfaces::swap_chain->swap_chain, (void*)hkPresent, &present_og)));
 	printf("mhstatus e: %s\n", MH_StatusToString(MH_EnableHook(MH_ALL_HOOKS)));
 	return true;

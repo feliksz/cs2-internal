@@ -20,6 +20,7 @@
     <ClCompile Include="deps\minhook\buffer.c" />
     <ClCompile Include="deps\minhook\hook.c" />
     <ClCompile Include="deps\minhook\trampoline.c" />
+    <ClCompile Include="menu\menu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="types.hpp" />
@@ -47,5 +48,6 @@
     <ClInclude Include="deps\minhook\buffer.h" />
     <ClInclude Include="deps\minhook\MinHook.h" />
     <ClInclude Include="deps\minhook\trampoline.h" />
+    <ClInclude Include="menu\menu.hpp" />
   </ItemGroup>
 </Project>
