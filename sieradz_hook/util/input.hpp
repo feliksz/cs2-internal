@@ -1,5 +1,5 @@
 #pragma once
-#include "../imgui/imgui.h"
+#include "../deps/imgui/imgui.h"
 #include "../types.hpp"
 #include <Windows.h>
 

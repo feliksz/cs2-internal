@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <d3d11.h>
 #include <vector>
-#include "minhook/MinHook.h"
+#include "deps/minhook/MinHook.h"
 #include "sdk/interfaces/game_resource_system.hpp"
 #include "sdk/interfaces/entity_system.hpp"
 #include "util/memory.hpp"

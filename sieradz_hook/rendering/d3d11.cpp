@@ -1,7 +1,7 @@
+#include "../deps/imgui/imgui.h"
+#include "../deps/imgui/imgui_impl_dx11.h"
+#include "../deps/imgui/imgui_impl_win32.h"
 #include "../hooks/hooks.hpp"
-#include "../imgui/imgui.h"
-#include "../imgui/imgui_impl_dx11.h"
-#include "../imgui/imgui_impl_win32.h"
 #include "../cs2.hpp"
 #include "d3d11.hpp"
 #pragma comment(lib, "d3d11.lib")

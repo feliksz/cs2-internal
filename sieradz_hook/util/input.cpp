@@ -1,4 +1,4 @@
-#include "../imgui/imgui_impl_win32.h"
+#include "../deps/imgui/imgui_impl_win32.h"
 #include "../cs2.hpp"
 #include "input.hpp"
 

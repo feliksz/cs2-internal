@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <Windows.h>
-#include "../minhook/MinHook.h"
+#include "../deps/minhook/MinHook.h"
 #include "../types.hpp"
 
 namespace memory {
