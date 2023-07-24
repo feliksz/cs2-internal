@@ -10,17 +10,25 @@
 void d3d11::initialize() {
 	printf("initializing d3d11 renderer...\n");
 	
-	set_swap_chain(cs2::interfaces::swap_chain->swap_chain);
+	set_swap_chain(cs2::interfaces::swap_chain);
 	create_render_target();
 
-	//ImGui::CreateContext();
+	ImGui::CreateContext();
+
+	ImGui::GetIO().BackendPlatformUserData = nullptr;
+
 	ImGui_ImplWin32_Init(cs2::globals::window_handle);
 	ImGui_ImplDX11_Init(d3d_device, d3d_device_ctx);
 
 	printf("hooking d3d11 functions...\n");
-	hooks::present.create(cs2::interfaces::swap_chain->swap_chain, 8, present_hk);
-	hooks::resize_buffers.create(cs2::interfaces::swap_chain->swap_chain, 13, resize_buffers_hk);
+	hooks::present.create(cs2::interfaces::swap_chain, 8, present_hk);
+	hooks::resize_buffers.create(cs2::interfaces::swap_chain, 13, resize_buffers_hk);
 
+}
+
+void d3d11::deinitialize() {
+	hooks::present.remove(cs2::interfaces::swap_chain, 8);
+	hooks::resize_buffers.remove(cs2::interfaces::swap_chain, 13);
 }
 
 void d3d11::create_render_target() {
@@ -59,7 +67,7 @@ HRESULT __stdcall d3d11::present_hk(IDXGISwapChain* thisptr, UINT sync_interval,
 		}
 	}*/
 
-	printf("swapchain: 0x%llx, sync_interval: %u, flags: %u\n", (u64)thisptr, sync_interval, flags);
+	//printf("swapchain: 0x%llx, sync_interval: %u, flags: %u\n", (u64)thisptr, sync_interval, flags);
 	
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();

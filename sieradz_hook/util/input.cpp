@@ -13,6 +13,10 @@ void input::initialize() {
     cs2::globals::wndproc_orig = (WNDPROC)SetWindowLongPtrW(cs2::globals::window_handle, GWLP_WNDPROC, (LONG_PTR)input::wndproc_hk);
 }
 
+void input::deinitialize() {
+    SetWindowLongPtr(cs2::globals::window_handle, GWLP_WNDPROC, (LONG_PTR)cs2::globals::wndproc_orig);
+}
+
 bool input::is_key_down(u32 key_code) {
     return ImGui::IsKeyDown(ImGuiKey_A);
 }

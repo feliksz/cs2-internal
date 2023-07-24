@@ -19,7 +19,6 @@ bool initialize_modules() {
 	GET_MODULE_AND_PRINT(cs2::modules::client_dll, L"client.dll");
 	GET_MODULE_AND_PRINT(cs2::modules::engine2_dll, L"engine2.dll");
 	GET_MODULE_AND_PRINT(cs2::modules::rendersystemdx11_dll, L"rendersystemdx11.dll");
-	GET_MODULE_AND_PRINT(cs2::modules::gameoverlayrenderer64_dll, L"gameoverlayrenderer64.dll");
 	return true;
 }
 
@@ -27,10 +26,11 @@ bool initialize_interfaces() {
 	printf("initializing interfaces...\n");
 	GET_INTERFACE_AND_PRINT(cs2::interfaces::client, cs2::modules::client_dll, "Source2Client002");
 	GET_INTERFACE_AND_PRINT(cs2::interfaces::resource_system, cs2::modules::engine2_dll, "GameResourceServiceClientV001");
-	cs2::interfaces::swap_chain = **(cs2::c_swap_chain***)(memory::from_rel(memory::find_pattern(cs2::modules::rendersystemdx11_dll, "66 0F 7F 05 ? ? ? ? 66 0F 7F 0D ? ? ? ? 48 89 35 ? ? ? ?"), 0x4));
-	cs2::interfaces::d3d_device = (ID3D11Device*)memory::from_rel(memory::find_pattern(cs2::modules::rendersystemdx11_dll, " 48 89 1D ? ? ? ? 48 89 3D"), 0xA);
-	printf("cs2::interfaces::swap_chain -> 0x%llx, ->swap_chain -> 0x%llx\n", (u64)cs2::interfaces::swap_chain, (u64)cs2::interfaces::swap_chain->swap_chain);
-	printf("cs2::interfaces::device -> 0x%llx\n", (u64)cs2::interfaces::d3d_device);
+
+	const auto swap_chain_ptr = memory::from_rel(memory::find_pattern(cs2::modules::rendersystemdx11_dll, "66 0F 7F 05 ? ? ? ? 66 0F 7F 0D ? ? ? ? 48 89 35 ? ? ? ?"), 0x4);
+	cs2::interfaces::swap_chain = *(IDXGISwapChain**)(**(uintptr_t**)swap_chain_ptr + 0x178);
+	printf("cs2::interfaces::swap_chain -> 0x%llx\n", (u64)cs2::interfaces::swap_chain);
+
 	return true;
 }
 
@@ -49,6 +49,14 @@ bool initialize_hooks() {
 	return true;
 }
 
+bool revert_hooks() {
+	input::deinitialize();
+	d3d11::deinitialize();
+	MH_DisableHook(MH_ALL_HOOKS);
+	return true;
+}
+
+#include "sdk/entity/c_base_entity.hpp"
 unsigned long __stdcall start(void* instance) {
 	initialize_console();
 
@@ -67,17 +75,28 @@ unsigned long __stdcall start(void* instance) {
 	printf("done!\n");
 
 	// wait for exit
-	while (true) {
+	while (!ImGui::IsKeyDown(ImGuiKey_Delete)) {
 		//printf("%i\n", (i32)ImGui::IsKeyDown(ImGuiKey_UpArrow));
+	
+		auto ent = (c_base_entity*)cs2::interfaces::resource_system->entity_system->get_base_entity(1);
+		auto ent_max_hp = ent->get_max_health(), ent_hp = ent->get_health();
+		printf("entity:\n\thandle: 0x%llx\n\thealth: %d\n\tmax health: %d\n\t", (u64)ent, ent_hp, ent_max_hp);
 		Sleep(10);
 	}
 
+	printf("should uninject WTF ! \n");
 	// wypierdalaj
+
+	fclose(stdout);
+	FreeConsole();
+	
 	FreeLibraryAndExitThread((HMODULE)instance, 0);
 	return 0ul;
 }
 
 void stop() {
+	revert_hooks();
+
 	printf("exiting... (SOOO EXITED!!!)\n");
 }
 

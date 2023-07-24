@@ -48,6 +48,11 @@ namespace memory {
 			return printf("%s\n", MH_StatusToString(MH_CreateHook((void*)get_vfunc(target, index), detour, (void**)&original_fn))) == 0;
 		}
 
+		bool remove(void* target, u64 index) {
+			return MH_RemoveHook((void*)get_vfunc(target, index)) == MH_OK;
+			
+		}
+
 		u64 get_vfunc(void* cls, u64 index) {
 			return (u64)((*(i64**)(cls))[index]);
 		}
