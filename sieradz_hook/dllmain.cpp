@@ -7,7 +7,7 @@
 #pragma warning(suppress : 6387)
 
 #define GET_MODULE_AND_PRINT(md, mdn) md = memory::module_t::get(mdn); if (!md) { printf(#md " -> failed\n"); return false; } printf(#md " -> 0x%llx\n", (u64)md.ptr);
-#define GET_INTERFACE_AND_PRINT(id, md, iv) id = md.get_interface<decltype(id)>(iv); if (!id) { printf("%s -> failed\n", #id); return false; } printf(#id " -> 0x%llx\n", (u64)id);
+#define GET_INTERFACE_AND_PRINT(id, md, iv) id = md.get_interface<decltype(id)>(iv); if (!id) { printf(#id " -> failed\n"); return false; } printf(#id " -> 0x%llx\n", (u64)id);
 
 void initialize_console() {
 	AllocConsole();
@@ -39,13 +39,10 @@ bool initialize_hooks() {
 	printf("initializing hooks...\n");
 
 	MH_Initialize();
-
 	input::initialize();
 	d3d11::initialize();
-	//printf("d3d11 device -> 0x%llx\n", (u64)memory::find_pattern())
+	MH_EnableHook(MH_ALL_HOOKS);
 
-	//printf("mhstatus: %s\n", MH_StatusToString(MH_CreateHook(cs2::interfaces::swap_chain->swap_chain, (void*)hkPresent, &present_og)));
-	printf("mhstatus e: %s\n", MH_StatusToString(MH_EnableHook(MH_ALL_HOOKS)));
 	return true;
 }
 
@@ -53,10 +50,10 @@ bool revert_hooks() {
 	input::deinitialize();
 	d3d11::deinitialize();
 	MH_DisableHook(MH_ALL_HOOKS);
+
 	return true;
 }
 
-#include "sdk/entity/c_base_entity.hpp"
 unsigned long __stdcall start(void* instance) {
 	initialize_console();
 
@@ -76,28 +73,13 @@ unsigned long __stdcall start(void* instance) {
 
 	// wait for exit
 	while (!ImGui::IsKeyDown(ImGuiKey_Delete)) {
-		//printf("%i\n", (i32)ImGui::IsKeyDown(ImGuiKey_UpArrow));
-	
-		auto ent = (c_base_entity*)cs2::interfaces::resource_system->entity_system->get_base_entity(1);
-		auto ent_max_hp = ent->get_max_health(), ent_hp = ent->get_health();
-		printf("entity:\n\thandle: 0x%llx\n\thealth: %d\n\tmax health: %d\n\t", (u64)ent, ent_hp, ent_max_hp);
 		Sleep(10);
 	}
 
-	printf("should uninject WTF ! \n");
-	// wypierdalaj
-
 	fclose(stdout);
 	FreeConsole();
-	
 	FreeLibraryAndExitThread((HMODULE)instance, 0);
 	return 0ul;
-}
-
-void stop() {
-	revert_hooks();
-
-	printf("exiting... (SOOO EXITED!!!)\n");
 }
 
 int __stdcall DllMain(HINSTANCE instance, UINT reason, LPVOID reserved) {
@@ -112,7 +94,7 @@ int __stdcall DllMain(HINSTANCE instance, UINT reason, LPVOID reserved) {
 	}
 	else if (reason == DLL_PROCESS_DETACH && !reserved) {
 		// uninject
-		stop();
+		revert_hooks();
 	}
 
 	return 
