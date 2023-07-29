@@ -17,8 +17,16 @@ void input::deinitialize() {
     SetWindowLongPtr(cs2::globals::window_handle, GWLP_WNDPROC, (LONG_PTR)cs2::globals::wndproc_orig);
 }
 
+bool input::is_mouse_in_region(const v2i& pos, const v2i& size) {
+    return ImGui::IsMouseHoveringRect({ (float)pos.x, (float)pos.y }, { (float)pos.x + size.x, (float)pos.y + size.y }, false);
+}
+
 bool input::is_key_down(u32 key_code) {
     return ImGui::IsKeyDown(ImGuiKey_A);
+}
+
+bool input::is_key_pressed(ImGuiKey key) {
+    return ImGui::IsKeyPressed(key);
 }
 
 LRESULT input::wndproc_hk(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param) {

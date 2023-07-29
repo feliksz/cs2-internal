@@ -5,8 +5,10 @@
 #include "../menu/menu.hpp"
 #include "../cs2.hpp"
 #include "d3d11.hpp"
+#include "render.hpp"
 #pragma comment(lib, "d3d11.lib")
 
+#include "../sdk/entity/entities.hpp"
 void d3d11::initialize() {
 	printf("initializing d3d11 renderer...\n");
 	
@@ -59,6 +61,42 @@ void d3d11::set_swap_chain(IDXGISwapChain* swap_chain) {
 	d3d11::d3d_device->GetImmediateContext(&d3d11::d3d_device_ctx);
 }
 
+void render_esp() {
+	for (auto i = 0; i < 32; i++) {
+		auto entity = cs2::interfaces::resource_system->entity_system->get_base_entity(i);
+		if (!entity)
+			continue;
+
+		auto handle = entity->get_ref_handle();
+		if (!handle.is_valid())
+			continue;
+
+		printf("idx: %d\n", handle.m_index);
+		if (!handle.as<CBaseEntity>()->IsBasePlayerController())
+			continue;
+
+		auto player = entity->get_ref_handle().as<CBasePlayerController>();
+		auto health = player->m_iPawnHealth();
+
+		auto pawn = player->m_hPawn().as<CBasePlayerPawn>();
+		//->get_bounding_box();
+		printf("hp: %i\n", health);
+		//printf("bbox: %i %i %i %i\n", bbox.x, bbox.y, bbox.w, bbox.h);
+		/*auto entity = *(CBaseEntity**)(controller + 0x10);
+		if (!entity)
+			continue;
+
+		if (!entity->IsBasePlayerController())
+			continue;
+
+		printf("entity id: %i\n", 1);
+		printf("\tcontroller: 0x%llx\n", (u64)controller);
+		printf("\tidentity: 0x%llx\n", (u64)entity);
+		printf("\thealth: %d\n", controller->m_iHealth());
+		printf("\tpawn health: %d\n", controller->m_iPawnHealth());
+		printf("\tname: %s\n", controller->m_sSanitizedPlayerName());*/
+	}
+}
 HRESULT __stdcall d3d11::present_hk(IDXGISwapChain* thisptr, UINT sync_interval, UINT flags) {
 	/*if (!ImGui::GetIO().BackendRendererUserData) {
 		if (SUCCEEDED(thisptr->GetDevice(IID_PPV_ARGS(&d3d_device)))) {
@@ -73,8 +111,12 @@ HRESULT __stdcall d3d11::present_hk(IDXGISwapChain* thisptr, UINT sync_interval,
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	render::_draw_list = ImGui::GetForegroundDrawList();
+
 	//ImGui::GetForegroundDrawList()->AddRectFilled({ 10, 10 }, { 200, 200 }, IM_COL32(255, 0, 255, 255));
 	menu::on_present();
+	//render_esp();
+
 	d3d_device_ctx->OMSetRenderTargets(1, &render_target_view, 0);
 
 	ImGui::Render();

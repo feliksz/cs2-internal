@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Windows.h>
+#include "menu/config.hpp"
 #include "rendering/d3d11.hpp"
 #include "util/input.hpp"
 #include "cs2.hpp"
@@ -68,6 +69,9 @@ unsigned long __stdcall start(void* instance) {
 		return 0ul;
 	}
 
+	config::initialize();
+	config::save();
+
 	// all done!
 	printf("done!\n");
 
@@ -76,7 +80,8 @@ unsigned long __stdcall start(void* instance) {
 		Sleep(10);
 	}
 
-	fclose(stdout);
+	revert_hooks();
+
 	FreeConsole();
 	FreeLibraryAndExitThread((HMODULE)instance, 0);
 	return 0ul;
@@ -94,7 +99,6 @@ int __stdcall DllMain(HINSTANCE instance, UINT reason, LPVOID reserved) {
 	}
 	else if (reason == DLL_PROCESS_DETACH && !reserved) {
 		// uninject
-		revert_hooks();
 	}
 
 	return 

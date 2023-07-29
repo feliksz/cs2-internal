@@ -4,6 +4,8 @@
 #include "../deps/minhook/MinHook.h"
 #include "../types.hpp"
 
+#pragma warning(disable : 6011)
+
 namespace memory {
 	struct module_t {
 		void* ptr{};
@@ -67,4 +69,9 @@ namespace memory {
 
 	u8* find_pattern(module_t mod, const char* pattern);
 
+	template <typename T, u32 index = 0, typename... Args_t>
+	inline T call_vfunc(void* base_class, Args_t... args) {
+		using func_t = T(__thiscall*)(void*, decltype(args)...);
+		return (*(func_t**)(base_class))[index](base_class, args...);
+	}
 }

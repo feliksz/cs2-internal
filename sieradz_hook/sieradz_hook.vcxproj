@@ -22,14 +22,14 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -57,7 +57,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);NOMINMAX</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -98,8 +98,13 @@
     <ClCompile Include="deps\minhook\hook.c" />
     <ClCompile Include="deps\minhook\trampoline.c" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="hooks\create_move.cpp" />
+    <ClCompile Include="menu\config.cpp" />
+    <ClCompile Include="menu\gui\gui.cpp" />
     <ClCompile Include="menu\menu.cpp" />
     <ClCompile Include="rendering\d3d11.cpp" />
+    <ClCompile Include="rendering\render.cpp" />
+    <ClCompile Include="sdk\c_handle.cpp" />
     <ClCompile Include="sdk\interfaces\entity_system.cpp" />
     <ClCompile Include="sdk\interfaces\game_resource_system.cpp" />
     <ClCompile Include="util\input.cpp" />
@@ -123,11 +128,17 @@
     <ClInclude Include="deps\minhook\MinHook.h" />
     <ClInclude Include="deps\minhook\trampoline.h" />
     <ClInclude Include="hooks\hooks.hpp" />
+    <ClInclude Include="menu\config.hpp" />
+    <ClInclude Include="menu\gui\gui.hpp" />
     <ClInclude Include="menu\menu.hpp" />
     <ClInclude Include="rendering\d3d11.hpp" />
-    <ClInclude Include="sdk\entity\c_base_entity.hpp" />
+    <ClInclude Include="rendering\render.hpp" />
+    <ClInclude Include="sdk\c_handle.hpp" />
+    <ClInclude Include="sdk\entity\entities.hpp" />
+    <ClInclude Include="sdk\interfaces\engine_client.hpp" />
     <ClInclude Include="sdk\interfaces\entity_system.hpp" />
     <ClInclude Include="sdk\interfaces\game_resource_system.hpp" />
+    <ClInclude Include="util\math.hpp" />
     <ClInclude Include="util\memory.hpp" />
     <ClInclude Include="types.hpp" />
     <ClInclude Include="cs2.hpp" />
