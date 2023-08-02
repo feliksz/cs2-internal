@@ -31,8 +31,9 @@ HRESULT WINAPI hooks::Present(IDXGISwapChain* swapchain, UINT sync_interval, UIN
 			d3d_device->GetImmediateContext(&d3d_context);
 			
 			ImGui_ImplDX11_Init(d3d_device, d3d_context);
-			printf("inited imgui\n");
 			imgui_initialized = true;
+
+			render::initialize_fonts();
 		}
 		else {
 			printf("couldn't init imgui.\n");
@@ -50,7 +51,11 @@ HRESULT WINAPI hooks::Present(IDXGISwapChain* swapchain, UINT sync_interval, UIN
 		render::_draw_list = ImGui::GetForegroundDrawList();
 
 		features::visuals::draw();
-		render::text(10, 10, menu::is_open ? "menu open" : "menu closed", { 255, 255, 255, 255 });
+		render::text(9, 9, "Jacek \"Ganja\" Internal By ThcFaniPl " __DATE__, col_t::black());
+		render::text(11, 9, "Jacek \"Ganja\" Internal By ThcFaniPl " __DATE__, col_t::black());
+		render::text(9, 11, "Jacek \"Ganja\" Internal By ThcFaniPl " __DATE__, col_t::black());
+		render::text(11, 11, "Jacek \"Ganja\" Internal By ThcFaniPl " __DATE__, col_t::black());
+		render::text(10, 10, "Jacek \"Ganja\" Internal By ThcFaniPl " __DATE__, col_t::white());
 
 		if (ImGui::IsKeyPressed(ImGuiKey_Insert, false)) {
 			menu::is_open = !menu::is_open;

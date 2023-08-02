@@ -31,6 +31,7 @@
     <ClCompile Include="menu\gui.cpp" />
     <ClCompile Include="hooks\FrameStageNotify.cpp" />
     <ClCompile Include="features\skin_changer.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_freetype.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sdk\types.hpp" />
@@ -78,5 +79,6 @@
     <ClInclude Include="sdk\entity\CEconEntity.hpp" />
     <ClInclude Include="sdk\entity\CPlayerObserverServices.hpp" />
     <ClInclude Include="sdk\interfaces\IVEngineClient.hpp" />
+    <ClInclude Include="vendor\imgui\imgui_freetype.h" />
   </ItemGroup>
 </Project>

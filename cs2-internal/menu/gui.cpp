@@ -68,6 +68,8 @@ void gui::checkbox(const char* title, bool* var) {
 		render::filled_rect(control_pos, control_size, col_t(250, 128, 114));
 	}
 
+	render::rect(control_pos, control_size, col_t::black(80));
+
 	auto label_pos = v2i{ ctx.cursor_pos.x + control_size.x + 6, ctx.cursor_pos.y + 1};
 	render::text(label_pos.x, label_pos.y, title, col_t::white());
 

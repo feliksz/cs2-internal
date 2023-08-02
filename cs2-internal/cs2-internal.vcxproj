@@ -73,6 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)$(ProjectName)\vendor\freetype;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)$(ProjectName)\vendor\freetype;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
@@ -117,7 +119,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;freetype.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -159,6 +161,7 @@
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_freetype.cpp" />
     <ClCompile Include="vendor\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="vendor\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
@@ -201,6 +204,7 @@
     <ClInclude Include="util\render.hpp" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_freetype.h" />
     <ClInclude Include="vendor\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="vendor\imgui\imgui_impl_win32.h" />
     <ClInclude Include="vendor\imgui\imgui_internal.h" />
