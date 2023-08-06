@@ -47,9 +47,12 @@ void draw_weapon_esp(CWeaponCSBase* weapon, const bbox_t& bbox) {
 		render::text(bbox.x + (bbox.w / 2) - (text_size.x / 2), bbox.y + bbox.h, weapon_name, col_t::white());
 	}
 	if (BOOL_GET("visuals.weapon_esp.ammo")) {
-		auto ammo_text = std::to_string(weapon->m_iClip1());
-		auto text_size = render::get_text_size(ammo_text.c_str());
-		render::text(bbox.x + (bbox.w / 2) - (text_size.x / 2), bbox.y + bbox.h + 16, ammo_text.c_str(), col_t::white());
+		auto clip1 = weapon->m_iClip1();
+		if (clip1 >= 0) {
+			auto ammo_text = std::to_string(weapon->m_iClip1());
+			auto text_size = render::get_text_size(ammo_text.c_str());
+			render::text(bbox.x + (bbox.w / 2) - (text_size.x / 2), bbox.y + bbox.h + 16, ammo_text.c_str(), col_t::white());
+		}
 	}
 
 }
