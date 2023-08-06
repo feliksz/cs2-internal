@@ -48,7 +48,7 @@ void menu::draw() {
 	gui::group("Other", { 242, 152 }, { 230, 70 });
 	{
 		gui::checkbox("Spectator list", &BOOL_GET("visuals.other.spectator_list"));
-		gui::checkbox("Remove Israel", &BOOL_GET("visuals.eye_candies.remove_israel"));
+		gui::checkbox("Only spectating me", &BOOL_GET("visuals.other.spectators_only_local"));
 	}
 
 }

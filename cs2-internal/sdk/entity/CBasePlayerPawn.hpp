@@ -10,6 +10,11 @@ public:
 
 class CBasePlayerPawn : public CBaseEntity {
 public:
+	SCHEMA_FIELD_OFFSET(CHandle, m_hController, 0x12BC);
 	SCHEMA_FIELD_OFFSET(CPlayerWeaponServices*, m_pWeaponServices, 0x1138);
 	SCHEMA_FIELD_OFFSET(CPlayerObserverServices*, m_pObserverServices, 0x1150);
+};
+
+class CCSObserverPawn : public CBasePlayerPawn {
+public:
 };

@@ -6,6 +6,8 @@
 #include "../util/render.hpp"
 #include "features.hpp"
 
+#include <format>
+
 void draw_player_esp(CCSPlayerController* controller, const bbox_t& bbox) {
 	auto player = controller->m_hPawn().get<CBasePlayerPawn>();
 	if (BOOL_GET("visuals.player_esp.box")) {
@@ -56,14 +58,48 @@ void draw_weapon_esp(CWeaponCSBase* weapon, const bbox_t& bbox) {
 			render::text(bbox.x + (bbox.w / 2) - (text_size.x / 2), bbox.y + bbox.h + 16, ammo_text.c_str(), col_t::white());
 		}
 	}
-
 }
 
+void draw_spectators() {
+	auto y = 0u;
+	auto local_player = interfaces::game_entity_system->GetLocalPlayerController();
+	for (auto i = 0; i < interfaces::game_entity_system->GetHighestEntityIndex(); i++) {
+		auto entity = interfaces::game_entity_system->GetBaseEntity(i);
+		if (!entity || !entity->IsBasePlayerController())
+			continue;
+
+		auto controller = (CCSPlayerController*)entity;
+		auto pawn       = controller->m_hPawn().get<CBasePlayerPawn>();
+		if (!pawn)
+			continue;
+
+		auto observer_service = pawn->m_pObserverServices();
+		auto observer_target  = observer_service->m_hObserverTarget().get<CCSObserverPawn>();
+		if (!observer_target)
+			continue;
+
+		auto target_controller = observer_target->m_hController().get<CCSPlayerController>();
+		if (!target_controller)
+			continue;
+
+		if (BOOL_GET("visuals.other.spectators_only_local") && target_controller != local_player)
+			continue;
+
+		auto str = std::format(
+			"{} -> {} ({})",
+			controller->m_sSanitizedPlayerName(),
+			target_controller->m_sSanitizedPlayerName(),
+			observer_service->m_iObserverMode() == 2 ? "first-person" : "third-person"
+		);
+
+		render::text(10, 320 + y, str.data(), col_t(0, 0, 255, 255));
+		y += render::get_text_size(str.data()).y + 2;
+	}
+}
 
 void features::visuals::draw() {
 	auto local_player = interfaces::game_entity_system->GetLocalPlayerController();
 
-	// @to-do: team check (we'll need a localplayer ptr to that, and i am too lazy to do that at this moment
 	for (auto i = 0; i < interfaces::game_entity_system->GetHighestEntityIndex(); i++) {
 		auto entity = interfaces::game_entity_system->GetBaseEntity(i);
 		if (!entity)
@@ -103,4 +139,6 @@ void features::visuals::draw() {
 			draw_weapon_esp(weapon, bbox);
 		}
 	}
+
+	draw_spectators();
 }
