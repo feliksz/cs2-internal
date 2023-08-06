@@ -33,6 +33,10 @@ HRESULT WINAPI hooks::Present(IDXGISwapChain* swapchain, UINT sync_interval, UIN
 			ImGui_ImplDX11_Init(d3d_device, d3d_context);
 			imgui_initialized = true;
 
+			auto& style = ImGui::GetStyle();
+			style.AntiAliasedLines = false;
+			style.AntiAliasedFill = false;
+
 			render::initialize_fonts();
 		}
 		else {

@@ -39,7 +39,9 @@ void draw_player_esp(CCSPlayerController* controller, const bbox_t& bbox) {
 
 void draw_weapon_esp(CWeaponCSBase* weapon, const bbox_t& bbox) {
 	if (BOOL_GET("visuals.weapon_esp.box")) {
+		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, col_t::black(100));
 		render::rect(bbox.x, bbox.y, bbox.w, bbox.h, col_t(255, 0, 255, 255));
+		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, col_t::black(100));
 	}
 	if (BOOL_GET("visuals.weapon_esp.name")) {
 		auto weapon_name = weapon->m_AttributeManager().m_Item().GetStaticData()->GetSimpleWeaponName();

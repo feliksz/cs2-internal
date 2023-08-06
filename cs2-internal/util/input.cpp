@@ -12,9 +12,6 @@ void input::initialize() {
 	ImGui::CreateContext();
 	ImGui_ImplWin32_Init(hwnd);
 
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
 	o_WndProc = (WNDPROC)SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
 }
 
