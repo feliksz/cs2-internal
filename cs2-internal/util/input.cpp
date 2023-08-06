@@ -12,6 +12,9 @@ void input::initialize() {
 	ImGui::CreateContext();
 	ImGui_ImplWin32_Init(hwnd);
 
+	auto& io = ImGui::GetIO();
+	io.IniFilename = io.LogFilename = nullptr;
+
 	o_WndProc = (WNDPROC)SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
 }
 
@@ -22,7 +25,9 @@ void input::shutdown() {
 
 LRESULT input::WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam) && menu::is_open)
-		return true;
+		return 1;
+
+	//@to-do: unlock mouse o_O
 
 	return CallWindowProcA(o_WndProc, hwnd, msg, wparam, lparam);
 }
