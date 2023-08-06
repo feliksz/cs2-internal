@@ -106,7 +106,7 @@ void features::visuals::draw() {
 			continue;
 
 		if (entity->IsBasePlayerController()) {
-			auto controller = entity->get_ref_handle().get<CCSPlayerController>();
+			auto controller = (CCSPlayerController*) entity;
 			if (!controller->IsAlive())
 				continue;
 
@@ -125,7 +125,7 @@ void features::visuals::draw() {
 			draw_player_esp(controller, bbox);
 		}
 		else if (entity->IsBaseWeaponController()) {
-			auto weapon = entity->get_ref_handle().get<CWeaponCSBase>();
+			auto weapon = (CWeaponCSBase*) entity;
 			if (!weapon)
 				continue;
 
@@ -133,12 +133,14 @@ void features::visuals::draw() {
 				continue;
 
 			auto bbox = bbox_t{};
-			if (!weapon->get_bounding_box(bbox))
+			if (!weapon->get_bounding_box(bbox, true))
 				continue;
 
 			draw_weapon_esp(weapon, bbox);
 		}
 	}
 
-	draw_spectators();
+	if (BOOL_GET("visuals.other.spectators")) {
+		draw_spectators();
+	}
 }

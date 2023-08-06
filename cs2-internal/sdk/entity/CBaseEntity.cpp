@@ -1,4 +1,5 @@
 #include "../../util/math.hpp"
+#include "../patterns.hpp"
 #include "CBaseEntity.hpp"
 
 bool CBaseEntity::get_bounding_box(bbox_t& bbox, bool compute_surrounding_box) {
@@ -8,7 +9,8 @@ bool CBaseEntity::get_bounding_box(bbox_t& bbox, bool compute_surrounding_box) {
 
     v3 min, max;
     if (compute_surrounding_box) {
-        return false;
+        if (!patterns::pfnComputeHitboxSurroundingBox(this, min, max))
+            return false;
     }
     else {
         auto origin = m_pGameSceneNode()->m_vecAbsOrigin();
