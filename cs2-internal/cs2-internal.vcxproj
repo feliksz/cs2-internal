@@ -206,6 +206,7 @@
     <ClInclude Include="util\math.hpp" />
     <ClInclude Include="util\memory.hpp" />
     <ClInclude Include="util\render.hpp" />
+    <ClInclude Include="vendor\fnv1a.hpp" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
     <ClInclude Include="vendor\imgui\imgui_freetype.h" />

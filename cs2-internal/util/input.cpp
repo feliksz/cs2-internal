@@ -36,10 +36,23 @@ bool input::is_mouse_in_region(i32 x, i32 y, i32 w, i32 h) {
 	return ImGui::IsMouseHoveringRect({ (f32)x, (f32)y }, { (f32)x + w, (f32)y + h }, false);
 }
 
+bool input::is_key_down(ImGuiKey key) {
+	return ImGui::IsKeyDown(key);
+}
+
+bool input::is_key_down(ImGuiMouseButton key) {
+	return ImGui::IsMouseDown(key);
+}
+
 bool input::is_key_pressed(ImGuiKey key) {
 	return ImGui::IsKeyPressed(key);
 }
 
 bool input::is_key_pressed(ImGuiMouseButton key) {
 	return ImGui::IsMouseClicked(key);
+}
+
+v2i input::get_mouse_pos() {
+	auto mp = ImGui::GetMousePos();
+	return v2i{ (i32)mp.x, (i32)mp.y };
 }

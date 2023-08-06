@@ -84,5 +84,6 @@
     <ClInclude Include="sdk\interfaces\ISchemaSystem.hpp" />
     <ClInclude Include="sdk\interfaces\CCSGOInput.hpp" />
     <ClInclude Include="sdk\classes\CUserCmd.hpp" />
+    <ClInclude Include="vendor\fnv1a.hpp" />
   </ItemGroup>
 </Project>

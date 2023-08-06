@@ -21,6 +21,11 @@ struct v2 {
 struct v2i {
 	i32 x = 0, y = 0;
 
+	v2i operator+(const v2i& rhs) const { return v2i{ x + rhs.x, y + rhs.y }; }
+	v2i operator-(const v2i& rhs) const { return v2i{ x - rhs.x, y - rhs.y }; }
+	v2i operator*(const v2i& rhs) const { return v2i{ x * rhs.x, y * rhs.y }; }
+	v2i operator/(const v2i& rhs) const { return v2i{ x / rhs.x, y / rhs.y }; }
+
 	operator bool() const {
 		return !(x == 0 && y == 0);
 	}
