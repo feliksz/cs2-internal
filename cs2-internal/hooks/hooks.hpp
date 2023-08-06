@@ -4,6 +4,9 @@
 #include "../sdk/types.hpp"
 
 namespace hooks {
+	bool __fastcall hkCreateMove(void* a1, i32 slot, bool active);
+	inline bool(__fastcall* o_CreateMove)(void*, i32, bool);
+
 	void __fastcall hkFrameStageNotify(void* rcx, i32 frameStage);
 	inline void(__fastcall* o_FrameStageNotify)(void*, i32);
 

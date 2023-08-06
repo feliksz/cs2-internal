@@ -10,8 +10,9 @@ namespace patterns {
 
 	void initialize();
 
-	inline void*(__thiscall* p_GetBaseEntity)(void*, i32);
-	inline i32(__thiscall* p_GetHighestEntityIndex)(void*, i32*);
-	inline void* (__thiscall* p_GetLocalPlayerController)(void*, i32);
-	inline void* p_GetMatricesForView{};
+	inline void*(__thiscall* pfnGetBaseEntity)(void*, i32);
+	inline i32(__thiscall* pfnGetHighestEntityIndex)(void*, i32*);
+	inline void* (__fastcall* pfnGetLocalPlayerController)(i32);
+	inline void* pfnGetMatricesForView{};
+
 }

@@ -35,6 +35,7 @@ void menu::draw() {
 		gui::checkbox("Name", &BOOL_GET("visuals.player_esp.name"));
 		gui::checkbox("Health", &BOOL_GET("visuals.player_esp.health"));
 		gui::checkbox("Weapon", &BOOL_GET("visuals.player_esp.weapon"));
+		gui::checkbox("Ignore allies", &BOOL_GET("visuals.player_esp.ignore_allies"));
 	}
 
 	gui::group("Weapons", { 242, 4 }, { 230, 140 });

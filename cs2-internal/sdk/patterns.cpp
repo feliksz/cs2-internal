@@ -10,8 +10,8 @@
 	printf(#var " -> 0x%llx\n", (u64)var);
 
 void patterns::initialize() {
-	GET_PATTERN_ABSOLUTE(p_GetBaseEntity, L"client.dll", signatures::GET_BASE_ENTITY, 0x03, 0x00);
-	GET_PATTERN_ABSOLUTE(p_GetHighestEntityIndex, L"client.dll", signatures::GET_HIGHEST_ENTITY_INDEX, 0x03, 0x00);
-	GET_PATTERN_ABSOLUTE(p_GetLocalPlayerController, L"client.dll", signatures::GET_LOCAL_PLAYER_CONTROLLER, 0x01, 0x00);
-	GET_PATTERN(p_GetMatricesForView, L"client.dll", signatures::GET_MATRICES_FOR_VIEW);
+	GET_PATTERN_ABSOLUTE(pfnGetBaseEntity, L"client.dll", signatures::GET_BASE_ENTITY, 0x03, 0x00);
+	GET_PATTERN_ABSOLUTE(pfnGetHighestEntityIndex, L"client.dll", signatures::GET_HIGHEST_ENTITY_INDEX, 0x03, 0x00);
+	GET_PATTERN_ABSOLUTE(pfnGetLocalPlayerController, L"client.dll", signatures::GET_LOCAL_PLAYER_CONTROLLER, 1, 0);
+	GET_PATTERN(pfnGetMatricesForView, L"client.dll", signatures::GET_MATRICES_FOR_VIEW);
 }

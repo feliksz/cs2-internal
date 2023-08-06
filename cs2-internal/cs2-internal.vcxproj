@@ -143,6 +143,7 @@
     <ClCompile Include="entry.cpp" />
     <ClCompile Include="features\skin_changer.cpp" />
     <ClCompile Include="features\visuals.cpp" />
+    <ClCompile Include="hooks\CreateMove.cpp" />
     <ClCompile Include="hooks\d3d11.cpp" />
     <ClCompile Include="hooks\FrameStageNotify.cpp" />
     <ClCompile Include="hooks\GetMatricesForView.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="menu\config.hpp" />
     <ClInclude Include="menu\gui.hpp" />
     <ClInclude Include="menu\menu.hpp" />
+    <ClInclude Include="sdk\classes\CUserCmd.hpp" />
     <ClInclude Include="sdk\entity\CBasePlayerController.hpp" />
     <ClInclude Include="sdk\entity\CBasePlayerPawn.hpp" />
     <ClInclude Include="sdk\entity\CBasePlayerWeapon.hpp" />
@@ -192,7 +194,9 @@
     <ClInclude Include="sdk\entity\CPlayerObserverServices.hpp" />
     <ClInclude Include="sdk\entity\CWeaponCSBase.hpp" />
     <ClInclude Include="sdk\interfaces.hpp" />
+    <ClInclude Include="sdk\interfaces\CCSGOInput.hpp" />
     <ClInclude Include="sdk\interfaces\CGameEntitySystem.hpp" />
+    <ClInclude Include="sdk\interfaces\ISchemaSystem.hpp" />
     <ClInclude Include="sdk\interfaces\IVEngineClient.hpp" />
     <ClInclude Include="sdk\patterns.hpp" />
     <ClInclude Include="sdk\schema.hpp" />

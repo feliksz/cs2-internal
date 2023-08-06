@@ -2,6 +2,7 @@
 #include "hooks/hooks.hpp"
 #include "menu/config.hpp"
 #include "sdk/interfaces.hpp"
+#include "sdk/schema.hpp"
 #include "sdk/patterns.hpp"
 #include "util/console.hpp"
 #include "util/input.hpp"
@@ -15,6 +16,7 @@ static HMODULE module_instance{};
 void cs2_initialize() {
 	interfaces::initialize();
 	patterns::initialize();
+	schema::initialize();
 	input::initialize();
 	config::initialize();
 
@@ -25,7 +27,8 @@ void cs2_initialize() {
 	MH_CreateHook((void*)((*(i64**)(interfaces::swapchain))[8]), (void*)hooks::Present, (void**)&hooks::o_Present);
 	MH_CreateHook((void*)((*(i64**)(interfaces::swapchain))[13]), (void*)hooks::ResizeBuffers, (void**)&hooks::o_ResizeBuffers);
 	MH_CreateHook((void*)((*(i64**)(interfaces::client))[31]), (void*)hooks::hkFrameStageNotify, (void**)&hooks::o_FrameStageNotify);
-	MH_CreateHook(patterns::p_GetMatricesForView, (void*)hooks::hkGetMatricesForView, (void**)&hooks::o_GetMatricesForView);
+	MH_CreateHook((void*)((*(i64**)(interfaces::input))[5]), (void*)hooks::hkCreateMove, (void**)&hooks::o_CreateMove);
+	MH_CreateHook(patterns::pfnGetMatricesForView, (void*)hooks::hkGetMatricesForView, (void**)&hooks::o_GetMatricesForView);
 	MH_EnableHook(MH_ALL_HOOKS);
 
 	while (!GetAsyncKeyState(VK_DELETE)) {
@@ -37,7 +40,8 @@ void cs2_initialize() {
 	MH_RemoveHook((void*)((*(i64**)(interfaces::swapchain))[8]));
 	MH_RemoveHook((void*)((*(i64**)(interfaces::swapchain))[13]));
 	MH_RemoveHook((void*)((*(i64**)(interfaces::client))[31]));
-	MH_RemoveHook(patterns::p_GetMatricesForView);
+	MH_RemoveHook((void*)((*(i64**)(interfaces::input))[5]));
+	MH_RemoveHook(patterns::pfnGetMatricesForView);
 
 	MH_DisableHook(MH_ALL_HOOKS);
 

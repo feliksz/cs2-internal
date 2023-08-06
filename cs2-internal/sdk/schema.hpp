@@ -15,5 +15,5 @@
 
 // @to-do: schema manager
 namespace schema {
-
+	void initialize();
 }

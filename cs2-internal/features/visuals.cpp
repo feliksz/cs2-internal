@@ -56,6 +56,8 @@ void draw_weapon_esp(CWeaponCSBase* weapon, const bbox_t& bbox) {
 
 
 void features::visuals::draw() {
+	auto local_player = interfaces::game_entity_system->GetLocalPlayerController();
+
 	// @to-do: team check (we'll need a localplayer ptr to that, and i am too lazy to do that at this moment
 	for (auto i = 0; i < interfaces::game_entity_system->GetHighestEntityIndex(); i++) {
 		auto entity = interfaces::game_entity_system->GetBaseEntity(i);
@@ -64,7 +66,13 @@ void features::visuals::draw() {
 
 		if (entity->IsBasePlayerController()) {
 			auto controller = entity->get_ref_handle().get<CCSPlayerController>();
+			if (!controller->IsAlive())
+				continue;
+
 			if (controller->m_bIsLocalPlayerController())
+				continue;
+
+			if (BOOL_GET("visuals.player_esp.ignore_allies") && controller->m_iTeamNum() == local_player->m_iTeamNum())
 				continue;
 
 			auto player = controller->m_hPawn().get<CBasePlayerPawn>();

@@ -1,6 +1,8 @@
 #pragma once
 #include <d3d11.h>
+#include "interfaces/CCSGOInput.hpp"
 #include "interfaces/CGameEntitySystem.hpp"
+#include "interfaces/ISchemaSystem.hpp"
 #include "interfaces/IVEngineClient.hpp"
 #include "types.hpp"
 
@@ -13,7 +15,9 @@ namespace interfaces {
 	bool initialize();
 
 	inline void* client;
+	inline ISchemaSystem* schema_system;
 	inline IVEngineClient* engine;
+	inline CCSGOInput* input;
 
 	inline void* game_resource_system;
 	inline CGameEntitySystem* game_entity_system;

@@ -2,16 +2,15 @@
 #include "CGameEntitySystem.hpp"
 
 CBaseEntity* CGameEntitySystem::GetBaseEntity(i32 index) {
-    return (CBaseEntity*) patterns::p_GetBaseEntity(this, index);
+    return (CBaseEntity*) patterns::pfnGetBaseEntity(this, index);
 }
 
 CBasePlayerController* CGameEntitySystem::GetLocalPlayerController() {
-    // !!! crashes
-    return (CBasePlayerController*) patterns::p_GetLocalPlayerController(this, -1);
+    return (CBasePlayerController*) patterns::pfnGetLocalPlayerController(-1);
 }
 
 i32 CGameEntitySystem::GetHighestEntityIndex() {
     i32 highest_idx = -1;
-    patterns::p_GetHighestEntityIndex(this, &highest_idx);
+    patterns::pfnGetHighestEntityIndex(this, &highest_idx);
     return highest_idx;
 }
