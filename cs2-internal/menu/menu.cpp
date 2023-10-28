@@ -52,7 +52,7 @@ void menu::draw() {
 
 	// @to-do: civilised tabs, or just rewrite entire menu
 	gui::window("dupaware pl", { 120, 120 }, { 580, 260 });
-	printf("nigga %i\n", gui::get_active_tab());
+
 	switch (gui::get_active_tab()) {
 	case 0: aimbot_tab(); break;
 	case 1: visuals_tab(); break;
